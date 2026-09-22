@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Mi Papelería Kawaii - Catálogo ✨</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link href="https://googleapis.com" rel="stylesheet">
+</head>
+<body>
+
+    <header class="header-kawaii">
+        <div class="logo-contenedor">
+            <h1>🌸 Papelería Kawaii 🌸</h1>
+            <p>Los artículos más tiernos para tus apuntes</p>
+        </div>
+        
+        <div class="busqueda-contenedor">
+            <input type="text" id="inputBuscar" placeholder="Buscar lápices, stickers...">
+            <select id="selectCategoria">
+                <option value="todos">Todos los productos</option>
+                <option value="lapices">✏️ Lápices</option>
+                <option value="cuadernos">📓 Cuadernos y Croqueras</option>
+                <option value="destacadores">🖍️ Destacadores</option>
+                <option value="stickers">✨ Stickers y Washi Tapes</option>
+            </select>
+        </div>
+    </header>
+
+    <main class="contenedor-principal">
+        <section class="cuadrgrid-productos" id="galeriaProductos"></section>
+    </main>
+
+    <!-- Botón Flotante del Carrito -->
+    <div id="btnFlotanteCarrito" class="btn-flotante-carrito">
+        🛒 <span id="contadorCarrito">0</span> Items
+    </div>
+
+    <!-- Modal del Carrito de Compras -->
+    <div id="modalCarrito" class="modal">
+        <div class="modal-contenido carrito-ancho">
+            <span class="cerrar-modal" id="btnCerrarCarrito">&times;</span>
+            <h2>🛒 Tu Pedido Kawaii</h2>
+            <div id="itemsCarrito" class="lista-items-carrito">
+                <!-- Se llena dinámicamente -->
+            </div>
+            <div class="total-contenedor">
+                <span>Total Estimado:</span>
+                <span id="totalCarritoPrecio">$0</span>
+            </div>
+            <button id="btnEnviarPedido" class="btn-pedido-completo">
+                Enviar pedido por WhatsApp 💬
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal de Detalles del Producto -->
+    <div id="modalDetalle" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar-modal" id="btnCerrarModal">&times;</span>
+            <div class="modal-flex">
+                <img id="modalImagen" src="" alt="">
+                <div class="modal-info">
+                    <h2 id="modalNombre"></h2>
+                    <span id="modalPrecio" class="precio-tag"></span>
+                    <p id="modalDescripcion"></p>
+                    <button id="btnAgregarAlCarrito" class="btn-agregar">
+                        Añadir al Carrito ✨
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="productos.js"></script>
+    <script src="funciones.js"></script>
+</body>
+</html>
