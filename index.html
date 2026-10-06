@@ -1,78 +1,719 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ Mi Papelería Kawaii - Catálogo ✨</title>
-    <link rel="stylesheet" href="estilos.css">
-    <link href="https://googleapis.com" rel="stylesheet">
+    <title>Boofi Papelería Kawaii - Catálogo Digital</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Inter & Quicksand -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kawaiiPink: '#ffb5e8',
+                        kawaiiPinkLight: '#ffe1f5',
+                        kawaiiYellow: '#fff9b1',
+                        kawaiiYellowLight: '#fffde6',
+                        kawaiiPurple: '#c2b280',
+                        kawaiiMint: '#b5fffc',
+                        kawaiiBg: '#fffafc',
+                    },
+                    fontFamily: {
+                        sans: ['Quicksand', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fff9fc;
+            font-family: 'Quicksand', sans-serif;
+        }
+        .kawaii-shadow {
+            box-shadow: 0 10px 25px -5px rgba(255, 181, 232, 0.4), 0 8px 10px -6px rgba(255, 181, 232, 0.2);
+        }
+        .kawaii-border {
+            border: 3px dashed #ffb5e8;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ffe1f5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffb5e8;
+            border-radius: 4px;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-kawaiiBg text-gray-700 antialiased min-h-screen flex flex-col justify-between">
 
-    <header class="header-kawaii">
-        <div class="logo-contenedor">
-            <h1>🌸 Papelería Kawaii 🌸</h1>
-            <p>Los artículos más tiernos para tus apuntes</p>
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b-2 border-kawaiiPinkLight shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 rounded-full bg-kawaiiPink flex items-center justify-center overflow-hidden shadow-md">
+               <img src="images/logo.png" alt="Logo de Boofi Papelería Kawaii" class="w-full h-full object-contain p-1">
+</div>
+                <div>
+                    <h1 class="text-2xl font-bold text-pink-600 tracking-wide">Boofi Papelería</h1>
+                    <p class="text-xs text-pink-400 font-semibold uppercase tracking-wider">Papelería Kawaii</p>
+                </div>
+            </div>
+
+            <!-- Search bar desktop -->
+            <div class="hidden md:flex flex-1 max-w-md mx-8">
+                <div class="relative w-full">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-pink-400">
+                        <i class="fa-solid fa-search"></i>
+                    </span>
+                    <input type="text" id="searchInput" placeholder="Busca stickers, lápices, gomas..." 
+                        class="w-full pl-10 pr-4 py-2 bg-kawaiiYellowLight border-2 border-kawaiiPink/50 rounded-full focus:outline-none focus:border-pink-500 text-sm transition-all shadow-inner">
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                
+                <button onclick="toggleCart()" class="relative bg-gradient-to-r from-pink-400 to-pink-500 text-white px-5 py-2.5 rounded-full font-bold shadow-md hover:from-pink-500 hover:to-pink-600 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="hidden sm:inline">Carrito</span>
+                    <span id="cartBadge" class="absolute -top-2 -right-2 bg-yellow-300 text-amber-900 text-xs font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-white shadow">0</span>
+                </button>
+            </div>
         </div>
-        
-        <div class="busqueda-contenedor">
-            <input type="text" id="inputBuscar" placeholder="Buscar lápices, stickers...">
-            <select id="selectCategoria">
-                <option value="todos">Todos los productos</option>
-                <option value="lapices">✏️ Lápices</option>
-                <option value="cuadernos">📓 Cuadernos y Croqueras</option>
-                <option value="destacadores">🖍️ Destacadores</option>
-                <option value="stickers">✨ Stickers y Washi Tapes</option>
-            </select>
+        <!-- Mobile search bar -->
+        <div class="md:hidden px-4 pb-3">
+            <div class="relative w-full">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-pink-400">
+                    <i class="fa-solid fa-search"></i>
+                </span>
+                <input type="text" id="searchInputMobile" placeholder="Busca stickers, lápices..." 
+                    class="w-full pl-10 pr-4 py-2 bg-kawaiiYellowLight border-2 border-kawaiiPink/50 rounded-full focus:outline-none focus:border-pink-500 text-sm shadow-inner">
+            </div>
         </div>
     </header>
 
-    <main class="contenedor-principal">
-        <section class="cuadrgrid-productos" id="galeriaProductos"></section>
+    <main class="flex-grow">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="bg-gradient-to-r from-pink-100 via-yellow-50 to-pink-100 rounded-3xl p-6 md:p-10 border-4 border-white kawaii-shadow relative overflow-hidden flex flex-col md:flex-row items-center justify-between">
+                <div class="absolute -right-10 -bottom-10 opacity-20 text-9xl text-pink-400 pointer-events-none">
+                    <i class="fa-solid fa-paw"></i>
+                </div>
+                <div class="max-w-xl z-10 text-center md:text-left mb-6 md:mb-0">
+                    <span class="bg-pink-200 text-pink-700 text-xs font-bold px-3 py-1 rounded-full loweruppercase tracking-wider inline-block mb-3">✨ Papelería bonita para días bonitos ✨</span>
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-gray-800 mb-3">¡Dale vida a tus apuntes!</h2>
+                    <p class="text-gray-600 text-sm md:text-base mb-6">Explora nuestro catálogo digital con los productos más tiernos y coloridos: stickers, notes, lápices y mucho más. Pide directo por WhatsApp.</p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-3">
+                        <a href="#catalogo" class="bg-pink-500 hover:bg-pink-600 text-white font-bold px-6 py-3 rounded-full shadow transition transform hover:-translate-y-0.5">Ver Productos</a>
+                     </div>
+                </div>
+                <div class="z-10 flex justify-center">
+                    <div class="w-48 h-48 md:w-64 md:h-64 bg-white/80 rounded-full flex items-center justify-center p-4 kawaii-shadow border-4 border-pink-200 animate-pulse">
+                        <div class="text-center">
+                            <i class="fa-solid fa-gift text-6xl md:text-7xl text-pink-400 mb-2"></i>
+                            <p class="font-bold text-pink-600 text-sm">Envíos a todo Chile</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                    <i class="fa-solid fa-list text-pink-500"></i> Categorías
+                </h3>
+                <span id="productCount" class="text-xs font-semibold text-gray-500">Mostrando todos los productos</span>
+            </div>
+            <div id="categoryContainer" class="flex items-center space-x-3 overflow-x-auto pb-4 pt-1 no-scrollbar">
+                <!-- Dynamically populated categories -->
+            </div>
+        </section>
+
+        <section id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Dynamically populated products -->
+            </div>
+            <!-- Empty state -->
+            <div id="emptyState" class="hidden text-center py-16">
+                <div class="text-6xl text-pink-300 mb-4"><i class="fa-solid fa-face-sad-tear"></i></div>
+                <h4 class="text-xl font-bold text-gray-700 mb-2">No encontramos productos</h4>
+                <p class="text-gray-500 text-sm">Prueba buscando con otro término o seleccionando otra categoría.</p>
+            </div>
+        </section>
     </main>
 
-    <!-- Botón Flotante del Carrito -->
-    <div id="btnFlotanteCarrito" class="btn-flotante-carrito">
-        🛒 <span id="contadorCarrito">0</span> Items
-    </div>
+    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onclick="toggleCart()"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between">
+                <!-- Drawer Header -->
+                <div class="p-6 bg-kawaiiPinkLight border-b border-pink-200 flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-bag-shopping text-pink-600 text-xl"></i>
+                        <h3 class="text-lg font-bold text-gray-800">Mi Carrito </h3>
+                    </div>
+                    <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700 text-xl font-bold w-8 h-8 rounded-full bg-white flex items-center justify-center shadow">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
 
-    <!-- Modal del Carrito de Compras -->
-    <div id="modalCarrito" class="modal">
-        <div class="modal-contenido carrito-ancho">
-            <span class="cerrar-modal" id="btnCerrarCarrito">&times;</span>
-            <h2>🛒 Tu Pedido Kawaii</h2>
-            <div id="itemsCarrito" class="lista-items-carrito">
-                <!-- Se llena dinámicamente -->
-            </div>
-            <div class="total-contenedor">
-                <span>Total Estimado:</span>
-                <span id="totalCarritoPrecio">$0</span>
-            </div>
-            <button id="btnEnviarPedido" class="btn-pedido-completo">
-                Enviar pedido por WhatsApp 💬
-            </button>
-        </div>
-    </div>
+                <!-- Drawer Items -->
+                <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-6 space-y-4 divide-y divide-gray-100">
+                    <!-- Cart items inserted dynamically -->
+                </div>
 
-    <!-- Modal de Detalles del Producto -->
-    <div id="modalDetalle" class="modal">
-        <div class="modal-contenido">
-            <span class="cerrar-modal" id="btnCerrarModal">&times;</span>
-            <div class="modal-flex">
-                <img id="modalImagen" src="" alt="">
-                <div class="modal-info">
-                    <h2 id="modalNombre"></h2>
-                    <span id="modalPrecio" class="precio-tag"></span>
-                    <p id="modalDescripcion"></p>
-                    <button id="btnAgregarAlCarrito" class="btn-agregar">
-                        Añadir al Carrito ✨
+                <!-- Drawer Footer -->
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between text-sm text-gray-600">
+                            <span>Subtotal</span>
+                            <span id="cartSubtotal">$0</span>
+                        </div>
+                        <div class="flex justify-between text-base font-bold text-gray-800 border-t pt-2">
+                            <span>Total</span>
+                            <span id="cartTotal" class="text-pink-600">$0</span>
+                        </div>
+                    </div>
+                    <button onclick="checkoutWhatsApp()" class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3.5 px-4 rounded-2xl shadow-lg flex items-center justify-center space-x-3 transition transform hover:-translate-y-0.5">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i>
+                        <span>Comprar por WhatsApp</span>
+                    </button>
+                    <button onclick="clearCart()" class="w-full mt-2 text-xs text-gray-400 hover:text-red-500 font-semibold py-1">
+                        Vaciar carrito
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="productos.js"></script>
-    <script src="funciones.js"></script>
+    <footer class="bg-white border-t border-pink-100 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded-full bg-pink-400 flex items-center justify-center text-white text-sm">
+                    <i class="fa-solid fa-cat"></i>
+                </div>
+                <span class="font-bold text-gray-800">Boofi Papelería Kawaii</span>
+            </div>
+            <p class="text-xs text-gray-500">© 2026 Boofi Papelería. Hecho con amor 💖</p>
+            <div class="flex space-x-4 text-pink-500 text-lg">
+                <a href="#" class="hover:text-pink-600"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-pink-600"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#" onclick="checkoutWhatsApp()" class="hover:text-green-600"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+ const products = [
+  {
+    id: 1,name: "Lonchera Kawaii", category: "Bolsos", price: 4500,
+    images: ["images/l1.png","images/l2.png", "images/l3.png","images/l4.png","images/l5.png","images/l6.png"],
+    stock: 6,
+    desc: "¡Práctica, espaciosa y térmica! Lonchera con un práctico bolsillo frontal y dos bolsillos laterales."
+  },
+   {
+    id: 2, name: "Estuche Multiuso", category: "Bolsos" , price: 4500,
+    images: ["images/e1.png","images/e2.png","images/e3.png","images/e4.png","images/e5.png"], stock: 6,    
+    desc: "¡Todo en su lugar y sin enredos! Estuche con 2 bolsillos externos y 12 compartimientos interiores para organizar tus cosas."
+  },
+   {
+    id: 3, name: "Pegamento Líquido 50ml", category: "Pegamentos", price: 1300, images: ["images/pegamento-liquido.png"], stock: 5,
+    desc: "¡Pegado fácil y sin complicaciones! Pegamento de alta adherencia para tus trabajos escolares, manualidades y proyectos de papelería."
+  },
+  {
+    id: 4, name: "Masilla Mágica 35gr", category: "Pegamentos", price: 2500, images: ["images/pegamento-magico.png"], stock: 3,
+    desc: "¡Pega, despega y vuelve a usar! Masilla adhesiva moldeable y reutilizable. Ideal para fijar objetos sin dañar superficies."
+  },
+  {
+    id: 5, name: "Pegamento en Cinta 8m", category: "Pegamentos", price: 1800, images: ["images/cinta8m.png"], stock: 3,
+    desc: "¡Pega fácil, rápido y sin ensuciar! Cinta adhesiva ideal para trabajos de papelería, tareas y manualidades."
+  },
+  {
+    id: 6, name: "Pegamento en Cinta 6m", category: "Pegamentos", price: 1600, images: ["images/cinta6m.png"], stock: 1,
+    desc: "¡Tu aliado para pegar al instante! Cinta adhesiva práctica y fácil de usar. Ideal para tus proyectos.",
+ },
+  {
+    id: 7,
+    name: "Set de Stickers", category: "Stickers", price: 800, images: ["images/stickers1.png", "images/stickers2.png", "images/stickers3.png"], stock: 3,
+    desc: "¡Tu dosis diaria de ternura! Incluye 3 láminas de stickers transparentes con adorables diseños kawaii para decorar lo que quieras."
+  },
+  {
+    id: 8, name: "Set de Stickers", category: "Stickers", price: 800, images: ["images/stickers9.png", "images/stickers10.png"], stock:2,
+    desc: "¡Dale un toque tierno y colorido a tus apuntes! 3 láminas transparentes con adorables diseños de personajes kawaii perfectas para decorar."
+  },
+  {
+    id: 9, name: "Stickers con Glitter", category: "Stickers", price: 600, images: ["images/stickers5.png", "images/stickers6.png","images/stickers7.png"], stock: 4,
+    desc: "¡Brillo y magia en cada detalle! 1 lámina de stickers brillantes con diseños kawaii para decorar."
+  },
+  {
+    id: 10, name: "Set de Stickers Sanrio", category: "Stickers", price: 1800, images: ["images/sanrio1.png", "images/sanrio2.png"], stock: 2,
+    desc: "¡Llena tus apuntes de ternura! 25 láminas transparentes de 7,5 x 7,5 cm con tus personajes favoritos."
+  },
+  {
+    id: 11, name: "Set de Stickers Sanrio", category: "Stickers",price: 1800, images: ["images/sanrio3.png", "images/sanrio4.png"], stock: 2,
+    desc: "¡Decora con tus personajes favoritos! 20 láminas transparentes , ideales para darle un toque tierno y único a tus apuntes y planners."
+  },
+  {
+    id: 12, name: "Corrector en Cinta 12m", category: "Correctores", price: 600, images: ["images/12m2.png", "images/12m3.png", "images/12m4.png"], stock: 4,
+    desc: "¡Correcciones rápidas y limpias! Práctico corrector compacto con adorable diseño de astronauta."
+    },
+    {
+    id: 13, name: "Corrector en Cinta 36m", category: "Correctores", price: 800, images: ["images/36m.png"], stock: 1,
+    desc: "¡Diseño tierno y gran duración! Corrector compacto y fácil de usar para una aplicación suave al instante.",
+  },
+  {
+    id: 14, name: "Corrector en Cinta 38m", category: "Correctores", price: 1000, images: ["images/38m1.png"], stock: 2, 
+    desc: "¡Precisión y ergonomía! Corrector en cinta con tierno diseño kawaii que garantiza trazos limpios sin manchas."
+  },
+  {
+    id: 15, name: "Corrector Líquido 8ml", category: "Correctores", price: 850, images: ["images/corrector-liquido.png"], stock: 4,
+    desc: "Corrector con punta metálica de alta precisión y secado rápido. Ideal para uso escolar o de oficina."
+  },
+  {
+    id: 16, name: "Notas Transparentes", category: "Notas", price: 800, images: ["images/transparentes.png"], stock: 2,
+    desc: "¡Toma notas sin dañar tus libros! 50 notas adhesivas transparentes ideales para calcar, subrayar o escribir encima sin arruinar tus páginas."
+  },
+  {
+    id: 17, name: "Notas Magnéticas", category: "Notas", price: 1200, images: ["images/magneticos1.png"], stock: 6,
+    desc: "¡Se adhieren a casi cualquier superficie sin pegamento! 50 notas estáticas de colores vibrantes para dejar recados visibles en todos lados."
+  },
+  {
+    id: 18, name: "Post-it Snoopy", category: "Notas", price: 1000, images: ["images/snoopy.png"], stock: 1,
+    desc: " ¡Añade un toque tierno a tus recordatorios! 40 notas adhesivas con diseños clásicos de Snoopy para organizar tu día con estilo."
+  },
+  {
+    id: 19, name: "Post-it Relojes", category: "Notas", price: 800, images: ["images/relojes.png"], stock: 3,
+    desc: " ¡Organiza tus pendientes de forma creativa! Pack con 90 notas adhesivas con diseños de relojes para planificar tus horarios y tareas."
+  },
+  {
+    id: 20, name: "Goma Cat Paw con Rodillo", category: "Gomas", price: 1500, images: ["images/gomagato1.png"], stock:1,
+    desc: "¡Limpieza y diversión en un solo producto! Goma de borrar con práctico rodillo integrado y tierno diseño de patita de gato.",
+    
+  },
+  {
+    id: 21,name: "Goma Capibara Retráctil", category: "Gomas", price: 1500, images: ["images/gomacapi.png"], stock: 3,
+    desc: "¡Borra con estilo y ternura! Goma de borrar retráctil con un adorable diseño de capibara."
+  },
+  {
+    id: 22, name: "Goma Cat Paw Retráctil", category: "Gomas", price: 1600, images: ["images/gomagato2.png"], Stock: 2,
+    desc: "¡Un toque brillante para tu estuche! Goma de borrar retráctil en forma de patita de gato con acabado con glitter."
+  },
+  {
+    id: 23, name: "Sacapuntas Kuromi", category: "Sacapuntas", price: 1800, images: ["images/skuromi.png"], stock: 1,
+    desc: "¡El estilo único de Kuromi en tu estuche! Práctico set que incluye sacapuntas y goma de borrar.",
+  },
+  {
+    id: 24, name: "Sacapuntas Burger", category: "Sacapuntas", price: 1500, images: ["images/sburger.png"], stock: 1,
+    desc: "¡El detalle más simpático para tu estuche! Un sacapuntas irresistible y original con diseño de hamburguesa.",  
+ },
+  {
+    id: 25, name: "Sacapuntas Lucky Cat", category: "Sacapuntas", price: 1800, images: ["images/slucky.png"], stock: 3,
+    desc: " ¡Atrae la buena suerte a tus estudios! Sacapuntas con diseño de gatito de la fortuna, disponible en colores negro y rosado."
+  },
+{
+    id: 26, name: "Libreta Van Gogh", category: "Van Gogh", price: 1500, images: ["images/libreta1.png"], stock: 2,
+    desc: "¡Inspira tu escritura! Libreta de notas con 44 páginas de líneas horizontales, perfecta para escribir y coleccionar."
+  },
+  {
+    id: 27, name: "Carpeta Sobre", category: "Van Gogh", price: 1500, images: ["images/sobre1.png"], stock: 2,
+    desc: "¡Organiza tus documentos con arte! Práctica carpeta tipo sobre en tamaño A4."
+  },
+  {
+    id: 28, name: "Washi Tape", category: "Van Gogh", price: 700, images: ["images/washi.png"], stock: 8,
+    desc: "¡Decora con arte y color! Cintas adhesivas decorativas de 5 m x 1,5 cm inspiradas en las obras maestras de Van Gogh."
+  },
+  {
+    id: 29, name: "Notas Van Gogh", category: "Van Gogh", price: 1600, images: ["images/post-vg.png"], stock: 3,
+    desc: " ¡Arte en cada página! 160 notas adhesivas ideales para usar como separadores y marcar tus lecturas favoritas con estilo."
+  },
+  {
+    id: 30, name: "Mini Tijera Cat Paw", category: "Herramientas de Corte", price: 2000, images: ["images/t1.png"], stock: 1,
+    desc: "¡Práctica y adorable! Tijera de bolsillo con diseño de patita de gato, ideal para llevar siempre en tu estuche." 
+  },
+  {
+    id: 31, name: "Cortador 360° Sanrio", category: "Herramientas de Corte", price: 2000, images: ["images/csanrio1.png"], stock: 4,
+    desc: "¡Cortes suaves y detallados! Cuchilla giratoria de 360° en cualquier dirección, perfecta para manualidades y scrapbooking."
+  },
+  {
+    id: 32, name: "Perforadora de Circulos", category: "Herramientas de Corte", price: 2500, images: ["images/pcirculo.png"], stock: 3,
+    desc: "¡Círculos perfectos para tus creaciones! Perfora círculos de 2,54 cm, ideal para decoración y proyectos DIY."
+  },
+  {
+    id: 33, name: "Cortador de Bordes", category: "Herramientas de Corte", price: 3000, images: ["images/pbordes.png"], stock: 4,
+    desc: "¡Dale un acabado profesional a tus proyectos! Cortador especializado para esquinas y bordes de papel, cartulina o fotos."
+  },
+  {
+    id: 34, name: "Mini Guillotina", category: "Herramientas de Corte", price: 4500, images: ["images/guillotina1.png"], stock:2,
+    desc: "¡Cortes rectos y precisos sin esfuerzo! Ideal para papel y cartulina, incluye regla auxiliar expansible para mayor comodidad."
+  },
+  {
+    id: 35, name: "Mini Guillotina", category: "Herramientas de Corte", price: 4500, images: ["images/guillotina2.png"], stock: 2,
+    desc: "¡Cortes impecables sin esfuerzo! Diseñada para papel y cartulina con total precisión, incluye una regla auxiliar extensible para medir con máxima comodidad."
+  },
+  {
+    id: 36, name: "Lápiz Cortador", category: "Herramientas de Corte", price: 800, images: ["images/lapizcutter.png"], stock: 8,
+    desc: "¡Control total y seguridad! Diseñado con formato de lápiz para cortes finos y exactos en tus proyectos creativos."
+  },
+  {
+    id: 37, name: "Corta Carton Delgado",category: "Herramientas de Corte", price: 1500, images: ["images/carton.png"], stock: 2,
+    desc: "¡Precisión y resistencia! Práctico cortador que incluye dos cuchillas de repuesto para cartón delgado y papel grueso."
+  },
+  {
+    id: 38, name: "Regla Capibara 15 cm", category: "Reglas", price: 1500, images: ["images/regla1.png"], stock: 4,
+    desc: "¡Dale un toque tierno a tus útiles! Regla de 15 cm con diseño de capibara para quienes aman los detalles únicos."
+  },
+  {
+    id: 39, name: "Regla Cat Paw 15cm", category: "Reglas", price: 1500, images: ["images/regla2.png"], stock: 1,
+    desc: "¡Brillitos y ternura en tus trazos! Regla de 15 cm con diseño de patita de gato y detalles brillantes."
+  },
+  {
+    id: 40, name: "Regla Cubo 30cm", category: "Reglas", price: 1500, images: ["images/regla30.png"], stock: 2,
+    desc: "¡Resistente y práctica! Regla de acrílico transparente con forma de cubo, perfecta para proyectos escolares y creativos."
+  },
+  {
+    id: 41, name: "Plumones de Pizarra", category: "Lápices", price: 4000, images: ["images/plumones.png"], stock: 2,
+    desc: "¡Ideal para clases, reuniones o estudios! Set de 12 marcadores de punta gruesa, escritura fluida y limpieza rápida sin dejar marcas."
+  },
+  {
+    id: 42, name: "Marcadores Metálicos", category: "Lápices", price: 5500, images: ["images/metalicos.png"], stock:2,
+    desc: "¡Brillo y color en cada trazo! Set de 10 marcadores metalizados de alta calidad con doble punta (fina y pincel) para diseños creativos."
+  },
+  {
+    id: 43, name: "Lápiz Borrable: Horóscopo", category: "Lápices", price: 500, images: ["images/borrables1.png"], stock:7,
+    desc: "¡Adiós a los errores! Tinta gel azul con punta fina de 0,5 mm, 100% borrable para mantener tus apuntes siempre perfectos."
+  },
+  {
+    id: 44, name: "Lápiz Borrable: Kawaii", category: "Lápices", price: 500, images: ["images/borrables2.png"], stock:7,
+    desc: "¡Escribe, borra y corrige sin huellas! Tinta gel azul con punta fina de 0,5 mm, 100% borrable y limpia."
+  },
+  {
+    id: 45, name: "Lápiz Gel ",category: "Lápices", price: 500, images: ["images/gel1.png"], stock: 6,
+    desc: "¡Escritura fluida con tus personajes favoritos! Diseños inspirados en Blackpink, One Piece y Naruto, con tinta gel negra y punta fina de 0,5 mm para una estética impecable."
+  },
+  {
+    id: 46, name: "Lápiz Spy x Family", category: "Lápices", price: 500, images: ["images/gelspy.png"], stock:3,
+    desc: "¡Adiós a los errores con tus personajes favoritos! Tinta gel negra con punta fina de 0,5 mm, 100% borrable y con diseños de Spy x Family para mantener tus apuntes siempre perfectos."
+  },
+  {
+    id: 47, name: "Set de Lápices Mina", category: "Lápices", price: 1800, images: ["images/setminas.png"], stock:1, 
+    desc: "¡Prácticos y adorables! Set de lápices con minas intercambiables y un tierno diseño de ositos kawaii.",
+  },
+  {
+    id: 48, name: "Portaminas Jujutsu Kaisen", category: "Lápices", price: 500, images: ["images/portaminas.png"], stock: 6,
+    desc: "¡Suma el poder de tus hechiceros favoritos a tu estuche! Portaminas de 0,5 mm con diseños detallados e ilustraciones de tus personajes favoritos."
+  },
+  {
+    id: 49, name: "Lápiz Infinito", category: "Lápices", price: 500, images: ["images/infinito.png"],stock: 2,
+    desc: "¡Escribe y dibuja sin parar! Lápiz mina de larga duración con un tierno diseño kawaii, práctico y listo para acompañarte todos los días."
+  },
+    {
+    id:50, name: "Puntero Manito", category: "Puntero", price: 2000, images: ["images/puntero.png"], stock:1,
+    desc: "¡Práctico, plegable y divertido! Se extiende hasta 68 cm, ideal para clases o presentaciones.",
+    
+  },
+  {
+    id:51, name: "Corrector y Pegamento 2 en 1", category: "Correctores", price: 1500, images: ["images/corrector-pegamento.png"], stock: 1,
+    desc: "¡Dos herramientas esenciales en un solo formato! Práctico accesoio compacto que combina corrector y pegamento en cinta para llevar siempre en tu estuche.",
+   },
+  {
+    id:52, name: "Esquelas + Sobres Cinnamoroll", category: "Sanrio", price: 1500, images: ["images/esquela.png"], stock:1,
+    desc: "¡Envía mensajes llenos de ternura! Set de hojas de carta decoradas con líneas y sobres a juego con adorables diseños de Cinnamoroll.",
+  },
+];
+
+        const categories = ["Todos", "Bolsos", "Pegamentos", "Correctores", "Stickers", "Post-it", "Van Gogh", "Gomas", "Sacapuntas", "Herramientas de Corte", "Lápices", "Reglas", "Puntero"];
+        let currentCategory = "Todos";
+        let searchQuery = "";
+        let cart = [];
+
+        const categoryContainer = document.getElementById('categoryContainer');
+        const productGrid = document.getElementById('productGrid');
+        const emptyState = document.getElementById('emptyState');
+        const cartDrawer = document.getElementById('cartDrawer');
+        const cartItemsContainer = document.getElementById('cartItemsContainer');
+        const cartBadge = document.getElementById('cartBadge');
+        const cartSubtotal = document.getElementById('cartSubtotal');
+        const cartTotal = document.getElementById('cartTotal');
+        const searchInput = document.getElementById('searchInput');
+        const searchInputMobile = document.getElementById('searchInputMobile');
+        const productCount = document.getElementById('productCount');
+       
+        function renderCategories() {
+            categoryContainer.innerHTML = '';
+            categories.forEach(cat => {
+                const isSelected = cat === currentCategory;
+                const btn = document.createElement('button');
+                btn.className = `whitespace-nowrap px-4 py-2 rounded-full text-sm font-bold transition shadow-sm flex items-center space-x-1.5 ${
+                    isSelected 
+                        ? 'bg-pink-500 text-white shadow-pink-200' 
+                        : 'bg-white text-gray-600 hover:bg-pink-50 border border-pink-100'
+                }`;
+                btn.innerHTML = `<span>${cat}</span>`;
+                btn.onclick = () => {
+                    currentCategory = cat;
+                    renderCategories();
+                    renderProducts();
+                };
+                categoryContainer.appendChild(btn);
+            });
+        }
+
+      function renderProducts() {
+  const filtered = products.filter(p => {
+    const matchesCat = currentCategory === "Todos" || p.category === currentCategory;
+    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          p.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          p.category.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCat && matchesSearch;
+  });
+
+  productCount.textContent = `Mostrando ${filtered.length} productos`;
+  productGrid.innerHTML = '';
+
+  if (filtered.length === 0) {
+    emptyState.classList.remove('hidden');
+    return;
+  } else {
+    emptyState.classList.add('hidden');
+  }
+
+  filtered.forEach(product => {
+    const card = document.createElement('div');
+    card.className = `bg-white rounded-3xl p-4 kawaii-shadow border-2 border-pink-100 flex flex-col justify-between transition transform hover:-translate-y-1 relative group`;
+
+    // Obtener índice actual de imagen para este producto
+    const idxKey = `imgIndex_${product.id}`;
+    let imgIndex = parseInt(localStorage.getItem(idxKey) || '0', 10);
+    if (!product.images || product.images.length === 0) {
+      product.images = ["images/placeholder.png"]; // opcional, por si no hay imágenes
+    }
+    if (imgIndex >= product.images.length) imgIndex = 0;
+
+    const currentImg = product.images[imgIndex];
+    const hasMultiple = product.images.length > 1;
+
+    card.innerHTML = `
+      <div class="relative w-full h-65 rounded-2xl overflow-hidden mb-4 border border-pink-100 bg-kawaiiPinkLight flex items-center justify-center">
+        <img src="${currentImg}" alt="${product.name}" class="w-full h-full object-contain">
+
+        ${hasMultiple ? `
+          <button onclick="prevImage(${product.id}, ${product.images.length})" 
+            class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-pink-600 w-8 h-8 rounded-full flex items-center justify-center shadow-md transition">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button onclick="nextImage(${product.id}, ${product.images.length})" 
+            class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-pink-600 w-8 h-8 rounded-full flex items-center justify-center shadow-md transition">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        ` : ''}
+
+        <span class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm text-pink-600 text-xs font-bold px-2.5 py-1 rounded-full">
+          ${product.category}
+        </span>
+
+       <span class="absolute top-2 right-2 ${
+  product.stock === 1
+    ? 'bg-red-100 text-red-600 animate-pulse'
+    : product.stock <= 3
+      ? 'bg-orange-100 text-orange-600'
+      : 'bg-amber-100 text-amber-800'
+} text-[10px] font-bold px-2 py-0.5 rounded-full">
+  ${
+    product.stock === 1
+      ? '🔥 Última unidad'
+      : product.stock <= 3
+        ? `⚠️ Quedan ${product.stock}`
+        : `Stock: ${product.stock}`
+  }
+</span>
+      </div>
+
+      <h4 class="font-bold text-gray-800 text-base mb-1 line-clamp-1">${product.name}</h4>
+      <p class="text-xs text-gray-500 mb-3 line-clamp-3">${product.desc}</p>
+      <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+        <div>
+          <span class="text-xs text-gray-400 block">Precio</span>
+          <span class="text-lg font-extrabold text-pink-600">$${product.price.toLocaleString('es-CL')}</span>
+        </div>
+        <button onclick="addToCart(${product.id})" 
+          class="bg-pink-100 hover:bg-pink-500 text-pink-600 hover:text-white p-2.5 rounded-2xl font-bold transition flex items-center justify-center shadow-xs">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
+    `;
+
+    productGrid.appendChild(card);
+  });
+}
+
+// Mover a la siguiente imagen
+function nextImage(productId, totalImages) {
+  const idxKey = `imgIndex_${productId}`;
+  let current = parseInt(localStorage.getItem(idxKey) || '0', 10);
+  current = (current + 1) % totalImages;
+  localStorage.setItem(idxKey, current);
+  renderProducts(); // re-render para mostrar la nueva imagen
+}
+
+// Mover a la imagen anterior
+function prevImage(productId, totalImages) {
+  const idxKey = `imgIndex_${productId}`;
+  let current = parseInt(localStorage.getItem(idxKey) || '0', 10);
+  current = (current - 1 + totalImages) % totalImages;
+  localStorage.setItem(idxKey, current);
+  renderProducts();
+}
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                if (existing.qty < product.stock) {
+                    existing.qty++;
+                } else {
+                    alertUser(`¡Ups! Solo hay ${product.stock} unidades disponibles.`);
+                    return;
+                }
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            updateCartUI();
+            toggleCart(true);
+        }
+
+        function updateQuantity(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if (!item) return;
+            const product = products.find(p => p.id === productId);
+
+            item.qty += delta;
+            if (item.qty <= 0) {
+                cart = cart.filter(i => i.id !== productId);
+            } else if (item.qty > product.stock) {
+                item.qty = product.stock;
+                alertUser(`Stock máximo alcanzado (${product.stock})`);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            cartBadge.textContent = totalItems;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center py-12 text-gray-400">
+                        <i class="fa-solid fa-cart-arrow-down text-5xl mb-3 text-pink-200"></i>
+                        <p class="text-sm font-medium">Tu carrito está vacío</p>
+                        <p class="text-xs text-gray-300 mt-1">¡Agrega productos kawaii para comenzar!</p>
+                    </div>
+                `;
+                cartSubtotal.textContent = '$0';
+                cartTotal.textContent = '$0';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = '';
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                subtotal += item.price * item.qty;
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between py-3';
+                row.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-pink-50 rounded-xl flex items-center justify-center text-2xl border border-pink-100 flex-shrink-0">
+                            ${item.emoji}
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-sm line-clamp-1">${item.name}</h5>
+                            <span class="text-xs text-pink-600 font-semibold">$${item.price.toLocaleString('es-CL')} c/u</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="flex items-center border border-gray-200 rounded-xl bg-gray-50 overflow-hidden">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="px-2.5 py-1 text-gray-600 hover:bg-pink-100 transition">-</button>
+                            <span class="px-2 text-xs font-bold text-gray-700">${item.qty}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)" class="px-2.5 py-1 text-gray-600 hover:bg-pink-100 transition">+</button>
+                        </div>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(row);
+            });
+
+            cartSubtotal.textContent = `$${subtotal.toLocaleString('es-CL')}`;
+            cartTotal.textContent = `$${subtotal.toLocaleString('es-CL')}`;
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+        }
+
+        function toggleCart(forceOpen = false) {
+            if (forceOpen) {
+                cartDrawer.classList.remove('hidden');
+            } else {
+                cartDrawer.classList.toggle('hidden');
+            }
+        }
+
+            function alertUser(msg) {
+            const notif = document.createElement('div');
+            notif.className = 'fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-4 py-3 rounded-2xl shadow-xl z-50 flex items-center space-x-2 animate-bounce';
+            notif.innerHTML = `<i class="fa-solid fa-circle-exclamation text-pink-400"></i><span>${msg}</span>`;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 3000);
+        }
+
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                alertUser("¡Agrega productos a tu carrito antes de comprar!");
+                return;
+            }
+
+            let message = "¡Hola! 🌸 Me gustaría realizar un pedido en *Boofi Papelería Kawaii*:\n\n";
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const sub = item.price * item.qty;
+                total += sub;
+                message += `${index + 1}. *${item.name}* x${item.qty} - $${sub.toLocaleString('es-CL')}\n`;
+            });
+
+            message += `\n*Total a Pagar:* $${total.toLocaleString('es-CL')}\n\n¡Quedo atento/a para coordinar el pago y envío! ✨`;
+
+            const phone = "5693233097"; 
+            const encoded = encodeURIComponent(message);
+           const url = `https://wa.me/${phone}?text=${encoded}`;
+            window.open(url, '_blank');
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderProducts();
+        });
+
+        searchInputMobile.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderProducts();
+        });
+
+        window.onload = () => {
+            renderCategories();
+            renderProducts();
+        };
+    </script>
 </body>
 </html>
