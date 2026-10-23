@@ -506,7 +506,7 @@
 
     card.innerHTML = `
       <div class="relative w-full h-65 rounded-2xl overflow-hidden mb-4 border border-pink-100 bg-kawaiiPinkLight flex items-center justify-center">
-        <img src="${currentImg}" alt="${product.name}" class="w-full h-full object-contain">
+        <img id="product-image-${product.id}"src="${currentImg} "alt="${product.name} "class="w-full h-full object-contain">
 
         ${hasMultiple ? `
           <button onclick="prevImage(${product.id}, ${product.images.length})" 
@@ -558,22 +558,63 @@
   });
 }
 
-// Mover a la siguiente imagen
-function nextImage(productId, totalImages) {
-  const idxKey = `imgIndex_${productId}`;
-  let current = parseInt(localStorage.getItem(idxKey) || '0', 10);
-  current = (current + 1) % totalImages;
-  localStorage.setItem(idxKey, current);
-  renderProducts(); // re-render para mostrar la nueva imagen
+
+const imageChangesInProgress = new Set();
+
+async function changeImage(productId, direction) {
+    // Evita cambios simultáneos al presionar varias veces.
+    if (imageChangesInProgress.has(productId)) return;
+
+    const product = products.find(p => p.id === productId);
+    const imageElement = document.getElementById(
+        `product-image-${productId}`
+    );
+
+    if (!product?.images?.length || !imageElement) return;
+
+    const idxKey = `imgIndex_${productId}`;
+    const total = product.images.length;
+
+    let current = Number(localStorage.getItem(idxKey) || 0);
+
+    if (!Number.isInteger(current) || current < 0 || current >= total) {
+        current = 0;
+    }
+
+    const next = (current + direction + total) % total;
+
+    imageChangesInProgress.add(productId);
+
+    try {
+        const newImage = new Image();
+        newImage.src = product.images[next];
+
+        // Mantiene la foto anterior hasta que la nueva esté lista.
+        await newImage.decode();
+
+        if (!imageElement.isConnected) return;
+
+        imageElement.src = newImage.src;
+        localStorage.setItem(idxKey, String(next));
+
+        // Comienza a cargar la próxima foto.
+        const upcoming = (next + direction + total) % total;
+        const preload = new Image();
+        preload.src = product.images[upcoming];
+    } catch (error) {
+        console.error("No se pudo cargar la imagen:", error);
+        alertUser("No se pudo cargar la foto. Intenta nuevamente.");
+    } finally {
+        imageChangesInProgress.delete(productId);
+    }
 }
 
-// Mover a la imagen anterior
-function prevImage(productId, totalImages) {
-  const idxKey = `imgIndex_${productId}`;
-  let current = parseInt(localStorage.getItem(idxKey) || '0', 10);
-  current = (current - 1 + totalImages) % totalImages;
-  localStorage.setItem(idxKey, current);
-  renderProducts();
+function nextImage(productId) {
+    changeImage(productId, 1);
+}
+
+function prevImage(productId) {
+    changeImage(productId, -1);
 }
 
         function addToCart(productId) {
