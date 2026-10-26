@@ -280,10 +280,40 @@
     id: 6, name: "Pegamento en Cinta 6m", category: "Pegamentos", price: 1600, images: ["./images/cinta6m.png"], stock: 1,
     desc: "¡Tu aliado para pegar al instante! Cinta adhesiva práctica y fácil de usar. Ideal para tus proyectos.",
  },
-  {
+     {
     id: 7,
-    name: "Set de Stickers", category: "Stickers", price: 800, images: ["./images/stickers1.png", "./images/stickers2.png", "./images/stickers3.png"], stock: 3,
-    desc: "¡Tu dosis diaria de ternura! Incluye 3 láminas de stickers transparentes con adorables diseños kawaii para decorar lo que quieras."
+    name: "Cajita de Stickers", category: "Stickers", price: 2500, images: ["./images/s1.png", "./images/s2.png", "./images/s3.png"], stock: 2,
+    desc:  "¡50 láminas de pura ternura! Cada cajita trae stickers kawaii para recortar y decorar tus proyectos."
+  },
+      {
+    id: 8,
+    name: "Cajita de Stickers", category: "Stickers", price: 2000, images: ["./images/s4.png"], stock: 1,
+    desc: "¡Tu mundo más tierno y creativo! 50 láminas de stickers kawaii para recortar y dejar volar tu imaginación."
+  },
+    {
+    id: 9,
+    name: "Stickers", category: "Stickers", price: 600, images: ["./images/s5.png","./images/s6.png","./images/s7.png"], stock: 10,
+    desc: "¡Creatividad sin bordes! Tiras de stickers adorables con acabado transparente para darle un toque único a tus proyectos."
+  },
+      {
+    id: 10,
+    name: "Set de Stickers", category: "Stickers", price: 1200, images: ["./images/s9.png"], stock: 5,
+    desc: 
+  },
+      {
+    id: 11,
+    name: "Rollo de Stickers", category: "Stickers", price: 2500, images: , stock: 3,
+    desc:
+  },
+ {
+    id: 11,
+    name: "Set de Stickers", category: "Stickers", price: 2500, images: , stock: 1,
+    desc:
+  },
+ {
+    id: 11,
+    name: "Set de Stickers", category: "Stickers", price: 2500, images: , stock: 4,
+    desc:
   },
   {
     id: 8, name: "Set de Stickers", category: "Stickers", price: 800, images: ["./images/stickers9.png", "./images/stickers10.png"], stock:2,
@@ -774,7 +804,7 @@ function prevImage(productId) {
 
             message += `\n*Total a Pagar:* $${total.toLocaleString('es-CL')}\n\n¡Quedo atento/a para coordinar el pago y envío! ✨`;
 
-            const phone = "5693233097"; 
+            const phone = "56948717549"; 
             const encoded = encodeURIComponent(message);
            const url = `https://wa.me/${phone}?text=${encoded}`;
             window.open(url, '_blank');
