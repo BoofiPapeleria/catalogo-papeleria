@@ -298,22 +298,22 @@
       {
     id: 10,
     name: "Set de Stickers", category: "Stickers", price: 1200, images: ["./images/s9.png"], stock: 5,
-    desc: 
+    desc: "Set de stickers kawaii para decorar tus apuntes."
   },
       {
     id: 11,
     name: "Rollo de Stickers", category: "Stickers", price: 2500, images:["./images/s9.png"] , stock: 3,
-    desc:
+    desc: "Set de stickers kawaii para decorar tus apuntes."
   },
  {
     id: 12,
     name: "Set de Stickers", category: "Stickers", price: 2500, images:["./images/s9.png"] , stock: 1,
-    desc:
+    desc: "Set de stickers kawaii para decorar tus apuntes."
   },
  {
     id: 13,
     name: "Set de Stickers", category: "Stickers", price: 2500, images: ["./images/s9.png"], stock: 4,
-    desc:
+    desc: "Set de stickers kawaii para decorar tus apuntes."
   },
   {
     id: 14, name: "Set de Stickers", category: "Stickers", price: 800, images: ["./images/stickers9.png", "./images/stickers10.png"], stock:2,
@@ -364,7 +364,7 @@
     desc: " ¡Organiza tus pendientes de forma creativa! Pack con 90 notas adhesivas con diseños de relojes para planificar tus horarios y tareas."
   },
   {
-    id: 26, name: "Goma Cat Paw con Rodillo", category: "Gomas", price: 1500, images: ["./images/gomagato1.png"], stock:1,
+    id: 26, name: "Goma Cat Paw con Rodillo", category: "Gomas", price: 1500, images: ["./images/gomagato1.png"], stock: 1,
     desc: "¡Limpieza y diversión en un solo producto! Goma de borrar con práctico rodillo integrado y tierno diseño de patita de gato.",
     
   },
@@ -373,7 +373,7 @@
     desc: "¡Borra con estilo y ternura! Goma de borrar retráctil con un adorable diseño de capibara."
   },
   {
-    id: 28, name: "Goma Cat Paw Retráctil", category: "Gomas", price: 1600, images: ["./images/gomagato2.png"], Stock: 2,
+    id: 28, name: "Goma Cat Paw Retráctil", category: "Gomas", price: 1600, images: ["./images/gomagato2.png"], stock: 2,
     desc: "¡Un toque brillante para tu estuche! Goma de borrar retráctil en forma de patita de gato con acabado con glitter."
   },
   {
@@ -571,7 +571,7 @@
     const hasMultiple = product.images.length > 1;
 
     card.innerHTML = `
-      <div class="relative w-full h-65 rounded-2xl overflow-hidden mb-4 border border-pink-100 bg-kawaiiPinkLight flex items-center justify-center">
+      <div class="relative w-full h-64 rounded-2xl overflow-hidden mb-4 border border-pink-100 bg-kawaiiPinkLight flex items-center justify-center">
         <img id="product-image-${product.id}"src="${currentImg} "alt="${product.name} "class="w-full h-full object-contain">
 
         ${hasMultiple ? `
