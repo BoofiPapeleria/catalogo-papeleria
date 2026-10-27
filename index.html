@@ -822,9 +822,8 @@ function prevImage(productId) {
            message += `${index + 1}. *${item.name}* x${item.qty} - $${sub.toLocaleString('es-CL')}\n`;
            });
 
-           message += `\n*Total productos:* $${total.toLocaleString('es-CL')}\n`;
-           message += `🚚 *Envío por pagar:* se cancela al courier al recibir el pedido.\n\n`;
-           message += `¡Quedo atenta para coordinar el pago y envío! ✨`;
+           message += `\n*Total productos:* $${total.toLocaleString('es-CL')} (no incluye el envío).\n\n`;
+           message += "¿Me podrían indicar el valor del envío y los datos para realizar el pago?";
             
             const phone = "56948717549"; 
             const encoded = encodeURIComponent(message);
