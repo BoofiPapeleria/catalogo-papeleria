@@ -183,27 +183,19 @@
                 </div>
 
                 <!-- Drawer Footer -->
-                <div class="p-6 bg-gray-50 border-t border-gray-100">
-                    <div class="space-y-2 mb-4">
-                        <div class="flex justify-between text-sm text-gray-600">
-                            <span>Subtotal</span>
-                            <span id="cartSubtotal">$0</span>
-                        </div>
-                        <div class="flex justify-between text-base font-bold text-gray-800 border-t pt-2">
-                            <span>Total</span>
-                            <span id="cartTotal" class="text-pink-600">$0</span>
-                        </div>
-                    </div>
-                    <div class="mb-4 rounded-2xl border border-pink-200 bg-pink-50 p-3">
-    <div class="flex items-start gap-2">
-        <i class="fa-solid fa-truck text-pink-500 mt-1"></i>
+             <div class="mb-4">
+            <div class="flex justify-between items-center text-base font-bold text-gray-800">
+            <span>Total productos</span>
+            <span id="cartTotal" class="text-pink-600">$0</span>
+             </div>
 
-        <div>
-            <p class="text-xs font-bold text-gray-700"> El total es solo por los productos. </p>
-            <p class="text-xs text-gray-500 mt-1"> El costo de envío se informa por WhatsApp 💬</p>
-        </div>
-    </div>
-</div>
+            <p class="mt-3 text-xs text-gray-600 leading-relaxed">
+           <i class="fa-solid fa-truck text-pink-500 mr-1"></i>
+           El envío tiene un costo que no está incluido.
+           Te confirmaremos su valor por WhatsApp antes del pago.
+           </p>
+           </div>
+                
                     <button onclick="checkoutWhatsApp()" class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3.5 px-4 rounded-2xl shadow-lg flex items-center justify-center space-x-3 transition transform hover:-translate-y-0.5">
                         <i class="fa-brands fa-whatsapp text-2xl"></i>
                         <span>Comprar por WhatsApp</span>
@@ -265,7 +257,7 @@
     desc: "¡Todo en su lugar y sin enredos! Estuche con 2 bolsillos externos y 12 compartimientos interiores para organizar tus cosas."
   },
    {
-    id: 3, name: "Pegamento Líquido 50ml", category: "Pegamentos", price: 1300, images: ["./images/pegamento-liquido.png"], stock: 5,
+    id: 3, name: "Pegamento Líquido 50ml", category: "Pegamentos", price: 1200, images: ["./images/pegamento-liquido.png"], stock: 5,
     desc: "¡Pegado fácil y sin complicaciones! Pegamento de alta adherencia para tus trabajos escolares, manualidades y proyectos de papelería."
   },
   {
@@ -282,22 +274,22 @@
  },
      {
     id: 7,
-    name: "Cajita de Stickers", category: "Stickers", price: 2500, images: ["./images/s1.png", "./images/s2.png", "./images/s3.png"], stock: 2,
+    name: "Cajita de Stickers", category: "Stickers", price: 3000, images: ["./images/s1.png", "./images/s2.png", "./images/s3.png"], stock: 2,
     desc:  "¡50 láminas de pura ternura! Cada cajita trae stickers kawaii para recortar y decorar tus proyectos."
   },
       {
     id: 8,
-    name: "Cajita de Stickers", category: "Stickers", price: 2000, images: ["./images/s4.png"], stock: 1,
+    name: "Cajita de Stickers", category: "Stickers", price: 2500, images: ["./images/s4.png"], stock: 1,
     desc: "¡Tu mundo más tierno y creativo! 50 láminas de stickers kawaii para recortar y dejar volar tu imaginación."
   },
     {
     id: 9,
-    name: "Stickers", category: "Stickers", price: 600, images: ["./images/st4.png","./images/st5.png","./images/st6.png","./images/st7.png"], stock: 13,
+    name: "Stickers", category: "Stickers", price: 500, images: ["./images/st4.png","./images/st5.png","./images/st6.png","./images/st7.png"], stock: 13,
     desc: "¡Ternura que brilla! Tira de stickers transparentes con personajes adorables y detalles únicos para decorar tus proyecto."
   },
       {
     id: 10,
-    name: "Bolsita de Stickers", category: "Stickers", price: 1200, images: ["./images/s9.png"], stock: 5,
+    name: "Bolsita de Stickers", category: "Stickers", price: 1000, images: ["./images/s9.png"], stock: 5,
     desc: "¡Un tierno empaque con sorpresas! Bolsitas con lindos stickers perfectos para decorar, coleccionar o regalar."
   },
       {
@@ -307,12 +299,12 @@
   },
  {
     id: 12,
-    name: "Set de Stickers", category: "Stickers", price: 800, images:["./images/st3.png"] , stock: 1,
+    name: "Set de Stickers", category: "Stickers", price: 600, images:["./images/st3.png"] , stock: 1,
     desc: "¡Ternura en cada detalle! Set de stickers transparentes con ilustraciones de niña kawaii,perfectos para decorar cualquier proyecto creativo."
   },
  {
     id: 13,
-    name: "Set de Stickers", category: "Stickers", price: 2500, images: ["./images/st1.png","./images/st2.png"], stock: 4,
+    name: "Set de Stickers", category: "Stickers", price: 800, images: ["./images/st1.png","./images/st2.png"], stock: 4,
     desc: "¡Brillo mágico en tonos pastel! 2 láminas de stickers con glitter, llenos de personajes tiernos y accesorios para decorar."
   },
   {
@@ -328,7 +320,7 @@
     desc: "¡Llena tus apuntes de ternura! 25 láminas transparentes de 7,5 x 7,5 cm con tus personajes favoritos."
   },
   {
-    id: 17, name: "Set de Stickers Sanrio", category: "Stickers",price: 1800, images: ["./images/sanrio3.png", "./images/sanrio4.png"], stock: 2,
+    id: 17, name: "Set de Stickers Sanrio", category: "Stickers",price: 1600, images: ["./images/sanrio3.png", "./images/sanrio4.png"], stock: 2,
     desc: "¡Decora con tus personajes favoritos! 20 láminas transparentes , ideales para darle un toque tierno y único a tus apuntes y planners."
   },
   {
@@ -377,7 +369,7 @@
     desc: "¡Un toque brillante para tu estuche! Goma de borrar retráctil en forma de patita de gato con acabado con glitter."
   },
   {
-    id: 29, name: "Sacapuntas Kuromi", category: "Sacapuntas", price: 1800, images: ["./images/skuromi.png"], stock: 1,
+    id: 29, name: "Sacapuntas Kuromi", category: "Sacapuntas", price: 1600, images: ["./images/skuromi.png"], stock: 1,
     desc: "¡El estilo único de Kuromi en tu estuche! Práctico set que incluye sacapuntas y goma de borrar.",
   },
   {
@@ -385,7 +377,7 @@
     desc: "¡El detalle más simpático para tu estuche! Un sacapuntas irresistible y original con diseño de hamburguesa.",  
  },
   {
-    id: 31, name: "Sacapuntas Lucky Cat", category: "Sacapuntas", price: 1800, images: ["./images/slucky.png"], stock: 3,
+    id: 31, name: "Sacapuntas Lucky Cat", category: "Sacapuntas", price: 1600, images: ["./images/slucky.png"], stock: 3,
     desc: " ¡Atrae la buena suerte a tus estudios! Sacapuntas con diseño de gatito de la fortuna, disponible en colores negro y rosado."
   },
 {
@@ -429,7 +421,7 @@
     desc: "¡Cortes impecables sin esfuerzo! Diseñada para papel y cartulina con total precisión, incluye una regla auxiliar extensible para medir con máxima comodidad."
   },
   {
-    id: 42, name: "Lápiz Cortador", category: "Herramientas de Corte", price: 800, images: ["./images/lapizcutter.png"], stock: 8,
+    id: 42, name: "Lápiz Cortador", category: "Herramientas de Corte", price: 700, images: ["./images/lapizcutter.png"], stock: 8,
     desc: "¡Control total y seguridad! Diseñado con formato de lápiz para cortes finos y exactos en tus proyectos creativos."
   },
   {
@@ -510,7 +502,6 @@
         const cartDrawer = document.getElementById('cartDrawer');
         const cartItemsContainer = document.getElementById('cartItemsContainer');
         const cartBadge = document.getElementById('cartBadge');
-        const cartSubtotal = document.getElementById('cartSubtotal');
         const cartTotal = document.getElementById('cartTotal');
         const searchInput = document.getElementById('searchInput');
         const searchInputMobile = document.getElementById('searchInputMobile');
@@ -729,7 +720,6 @@ function prevImage(productId) {
                         <p class="text-xs text-gray-300 mt-1">¡Agrega productos para comenzar!</p>
                     </div>
                 `;
-                cartSubtotal.textContent = '$0';
                 cartTotal.textContent = '$0';
                 return;
             }
@@ -762,7 +752,6 @@ function prevImage(productId) {
                 cartItemsContainer.appendChild(row);
             });
 
-            cartSubtotal.textContent = `$${subtotal.toLocaleString('es-CL')}`;
             cartTotal.textContent = `$${subtotal.toLocaleString('es-CL')}`;
         }
 
@@ -793,17 +782,19 @@ function prevImage(productId) {
                 return;
             }
 
-            let message = "¡Hola! Me gustaría realizar un pedido:\n\n";
-            let total = 0;
+           let message = "¡Hola! Me gustaría realizar un pedido:\n\n";
+           let total = 0;
 
-            cart.forEach((item, index) => {
-                const sub = item.price * item.qty;
-                total += sub;
-                message += `${index + 1}. *${item.name}* x${item.qty} - $${sub.toLocaleString('es-CL')}\n`;
-            });
+           cart.forEach((item, index) => {
+           const sub = item.price * item.qty;
+           total += sub;
+           message += `${index + 1}. *${item.name}* x${item.qty} - $${sub.toLocaleString('es-CL')}\n`;
+           });
 
-            message += `\n*Total a Pagar:* $${total.toLocaleString('es-CL')}\n\n¡Quedo atento/a para coordinar el pago y envío! ✨`;
-
+           message += `\n*Total productos:* $${total.toLocaleString('es-CL')}\n`;
+           message += `🚚 *Envío por pagar:* se cancela al courier al recibir el pedido.\n\n`;
+           message += `¡Quedo atenta para coordinar el pago y envío! ✨`;
+            
             const phone = "56948717549"; 
             const encoded = encodeURIComponent(message);
            const url = `https://wa.me/${phone}?text=${encoded}`;
