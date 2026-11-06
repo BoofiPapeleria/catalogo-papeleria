@@ -416,7 +416,7 @@
     desc: "¡Un toque brillante para tu estuche! Goma de borrar retráctil en forma de patita de gato con acabado con glitter."
   },
   {
-    id: 30, name: "Sacapuntas Kuromi", category: "Sacapuntas", price: 1600, images: ["./images/skuromi.png"], stock: 1,
+    id: 30, name: "Sacapuntas Kuromi", category: "Sacapuntas", price: 1600, images: ["./images/skuromi.png"], stock: 0,
     desc: "¡El estilo único de Kuromi en tu estuche! Práctico set que incluye sacapuntas y goma de borrar.",
   },
   {
@@ -472,7 +472,7 @@
     desc: "¡Control total y seguridad! Diseñado con formato de lápiz para cortes finos y exactos en tus proyectos creativos."
   },
   {
-    id: 44, name: "Corta Carton Delgado",category: "Herramientas de Corte", price: 1500, images: ["./images/carton.png"], stock: 2,
+    id: 44, name: "Corta Carton Delgado",category: "Herramientas de Corte", price: 1500, images: ["./images/carton.png"], stock: 1,
     desc: "¡Precisión y resistencia! Práctico cortador que incluye dos cuchillas de repuesto para cartón delgado y papel grueso."
   },
   {
@@ -524,7 +524,7 @@
     desc: "¡Escribe y dibuja sin parar! Lápiz mina de larga duración con un tierno diseño kawaii, práctico y listo para acompañarte todos los días."
   },
     {
-    id: 57, name: "Puntero Manito", category: "Puntero", price: 2000, images: ["./images/puntero.png"], stock:1,
+    id: 57, name: "Puntero Manito", category: "Puntero", price: 2000, images: ["./images/puntero.png"], stock: 0,
     desc: "¡Práctico, plegable y divertido! Se extiende hasta 68 cm, ideal para clases o presentaciones.",
     
   },
@@ -628,14 +628,18 @@
         </span>
 
        <span class="absolute top-2 right-2 ${
-  product.stock === 1
+  product.stock === 0
+    ? 'bg-gray-200 text-gray-600'
+    : product.stock === 1
     ? 'bg-red-100 text-red-600 animate-pulse'
     : product.stock <= 3
       ? 'bg-orange-100 text-orange-600'
       : 'bg-amber-100 text-amber-800'
 } text-[10px] font-bold px-2 py-0.5 rounded-full">
   ${
-    product.stock === 1
+    product.stock === 0
+      ? 'Agotado'
+      : product.stock === 1
       ? '🔥 Última unidad'
       : product.stock <= 3
         ? `⚠️ Quedan ${product.stock}`
@@ -651,10 +655,16 @@
           <span class="text-xs text-gray-400 block">Precio</span>
           <span class="text-lg font-extrabold text-pink-600">$${product.price.toLocaleString('es-CL')}</span>
         </div>
-        <button onclick="addToCart(${product.id})" 
-          class="bg-pink-100 hover:bg-pink-500 text-pink-600 hover:text-white p-2.5 rounded-2xl font-bold transition flex items-center justify-center shadow-xs">
-          <i class="fa-solid fa-plus"></i>
-        </button>
+        <<button onclick="addToCart(${product.id})" 
+  ${product.stock === 0 ? 'disabled' : ''}
+  class="${
+    product.stock === 0
+      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+      : 'bg-pink-100 hover:bg-pink-500 text-pink-600 hover:text-white'
+  } p-2.5 rounded-2xl font-bold transition flex items-center justify-center shadow-xs"
+>
+  <i class="fa-solid ${product.stock === 0 ? 'fa-ban' : 'fa-plus'}"></i>
+</button>
       </div>
     `;
 
@@ -722,39 +732,28 @@ function prevImage(productId) {
 }
 
         function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
+  const product = products.find(p => p.id === productId);
 
-            const existing = cart.find(item => item.id === productId);
-            if (existing) {
-                if (existing.qty < product.stock) {
-                    existing.qty++;
-                } else {
-                    alertUser(`¡Ups! Solo hay ${product.stock} unidades disponibles.`);
-                    return;
-                }
-            } else {
-                cart.push({ ...product, qty: 1 });
-            }
-            updateCartUI();
-            toggleCart(true);
-        }
+  if (!product || product.stock === 0) {
+    alertUser("Este producto está agotado.");
+    return;
+  }
 
-        function updateQuantity(productId, delta) {
-            const item = cart.find(i => i.id === productId);
-            if (!item) return;
-            const product = products.find(p => p.id === productId);
+  const existing = cart.find(item => item.id === productId);
 
-            item.qty += delta;
-            if (item.qty <= 0) {
-                cart = cart.filter(i => i.id !== productId);
-            } else if (item.qty > product.stock) {
-                item.qty = product.stock;
-                alertUser(`Stock máximo alcanzado (${product.stock})`);
-            }
-            updateCartUI();
-        }
+  if (existing) {
+    if (existing.qty < product.stock) {
+      existing.qty++;
+    } else {
+      alertUser(`¡Ups! Solo hay ${product.stock} unidades disponibles.`);
+    }
+  } else {
+    cart.push({ ...product, qty: 1 });
+  }
 
+  updateCartUI();
+  toggleCart(true);
+}
         function updateCartUI() {
             const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
             cartBadge.textContent = totalItems;
