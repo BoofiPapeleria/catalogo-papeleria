@@ -655,7 +655,7 @@
           <span class="text-xs text-gray-400 block">Precio</span>
           <span class="text-lg font-extrabold text-pink-600">$${product.price.toLocaleString('es-CL')}</span>
         </div>
-        <<button onclick="addToCart(${product.id})" 
+        <button onclick="addToCart(${product.id})" 
   ${product.stock === 0 ? 'disabled' : ''}
   class="${
     product.stock === 0
