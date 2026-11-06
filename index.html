@@ -626,7 +626,7 @@
         </span>
 
       <span class="absolute top-2 right-2 ${product.stock === 0 ? 'bg-gray-800 text-white' : product.stock <= 1 ? 'bg-red-100 text-red-600 animate-pulse' : product.stock <= 3 ? 'bg-orange-100 text-orange-600' : 'bg-amber-100 text-amber-800'} text-[10px] font-bold px-2 py-0.5 rounded-full">
-  ${product.stock === 0 ?'❌ Agotado' : product.stock <= 1 ? '🔥 Última unidad' : product.stock <= 3 ? '⚠️ Quedan' ${product.stock} : `Stock ${product.stock}`}
+  ${product.stock === 0 ?'❌ Agotado' : product.stock <= 1 ? '🔥 Última unidad' : product.stock <= 3 ?'⚠️Quedan ${product.stock}' : 'Stock ${product.stock}'}
 </span>
 </span>
       </div>
